@@ -1,7 +1,7 @@
 import express from 'express';
+const router = express.Router();
 import User from '../../models/User';
 
-const router = express.Router();
 
 router.post('/register', async (req, res) => {
   try {
