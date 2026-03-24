@@ -19,4 +19,21 @@ router.post('/', async (req, res) => {
   }
 });
 
+router.get('/', async (req, res) => {
+  try {
+    const projects = await Project.find({ user: req.user });
+    res.status(200).json(projects);
+  } catch(err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+router.get('/:id', async (req, res) => {
+  try {
+    const project = await Project.findById(req.params.id);
+
+    if (!)
+  }
+})
+
 export default router;
