@@ -28,12 +28,12 @@ router.get('/', async (req, res) => {
   }
 });
 
-router.get('/:id', async (req, res) => {
-  try {
-    const project = await Project.findById(req.params.id);
+// router.get('/:id', async (req, res) => {
+//   try {
+//     const project = await Project.findById(req.params.id);
 
-    if (!)
-  }
-})
+//     if (!)
+//   }
+// })
 
 export default router;
