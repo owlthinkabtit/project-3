@@ -1,8 +1,9 @@
 import jwt from 'jsonwebtoken';
 
 export async function authMiddleware(req, res, next) {
+
   try {
-    let token = req.headers.authorization
+    let token = req.headers.authorization;
 
     if (!token) {
       return res.status(403).json({ message: "Access denined. No token provided" })
@@ -10,14 +11,14 @@ export async function authMiddleware(req, res, next) {
 
     token = token.split(' ').pop().trim()
 
-    const { data } = jwt.verify(token, secret)
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    req.user = decoded.userId;
 
-    req.user = data
 
     next();
 
   } catch (err) {
-    console.log(err.message)
+    console.log("Auth Error:", err.message)
     res.status(400).json({ message: err.message })
   }
 }

@@ -1,8 +1,8 @@
 import express from 'express';
 const router = express.Router();
 
-import Project from '../../models/Project';
-import { authMiddleware } from '../utils/auth.js';
+import Project from '../../models/Project.js';
+import authMiddleware from '../../utils/auth.js';
 
 router.use(authMiddleware)
 
@@ -28,12 +28,31 @@ router.get('/', async (req, res) => {
   }
 });
 
-// router.get('/:id', async (req, res) => {
-//   try {
-//     const project = await Project.findById(req.params.id);
+router.get('/:id', async (req, res) => {
+  try {
+    const project = await Project.findById(req.params.id);
 
-//     if (!)
-//   }
-// })
+    if (!project || project.user.toString() !== req.user) {
+      return res.status(403).json({ error: "Not authorized to view this project." })
+    }
+    res.status(200).json(project);
+  } catch(err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+router.delete('/:id', async (req, res) => {
+  try {
+    const project = await Project.findById(req.params.id);
+
+    if (!project || project.user.toString() !== req.user) {
+      return res.status(403).json({ error: "Not authorized to delete this project" });
+    }
+    await Project.findByIdAndDelete(req.params.id);
+    res.status(200).json({ message: "Project deleted successfully" });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+})
 
 export default router;
