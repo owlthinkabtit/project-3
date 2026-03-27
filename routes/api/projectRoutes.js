@@ -28,6 +28,7 @@ router.get('/', async (req, res) => {
   }
 });
 
+
 router.get('/:id', async (req, res) => {
   try {
     const project = await Project.findById(req.params.id);
