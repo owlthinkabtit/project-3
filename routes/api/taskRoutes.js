@@ -1,5 +1,5 @@
 import express from 'express'
-import Task from '../../models/Task';
+import Task from '../../models/Task.js';
 import auth from '../../utils/auth.js'
 
 
@@ -25,3 +25,17 @@ router.get('/:projectId', async (req, res) => {
   }
 });
 
+router.patch('/:id', async (req, res) => {
+  try {
+    const updatedTask = await Task.findByIdAndUpdate(
+      req.params.id,
+      req.body,
+      { new: true }
+    );
+    res.status(200).json(updatedTask);
+  } catch(err) {
+    res.status(400).json({ error: err.message})
+  }
+});
+
+export default router;

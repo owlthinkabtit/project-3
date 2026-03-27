@@ -3,6 +3,7 @@ import express from 'express';
 import mongoose from 'mongoose';
 import userRoutes from './routes/api/userRoutes.js';
 import projectRoutes from './routes/api/projectRoutes.js';
+import taskRoutes from './routes/api/taskRoutes.js';
 
 const app = express();
 
@@ -14,6 +15,7 @@ mongoose.connect(process.env.MONGO_URI)
 
 app.use('/api/users', userRoutes);
 app.use('/api/projects', projectRoutes);
+app.use('/api/tasks', taskRoutes);
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`))
